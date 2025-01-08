@@ -26,6 +26,18 @@ def parse_text(text: str) -> list[str]:
     # TODO: 1行には最大3文字まで
     # TODO: 最大2行まで
     return text.split()
+
+def get_font_size(max_length: int) -> int:
+    if max_length == 1:
+        return 75
+    if max_length == 2:
+        return 65
+    if max_length == 3:
+        return 55
+    if max_length == 4:
+        return 45
+    return 35
+
 def prepare_font(size: int = 55) -> ImageFont:
     """
     フォントオブジェクトを準備する
@@ -90,7 +102,7 @@ def main(
     print(max_charactors)
     output_file_name: str = "".join(parsed_text) + ".png"
     out: Image = prepare_image_file()
-    font: ImageFont = prepare_font(55 if max_charactors == 3 else 65)
+    font: ImageFont = prepare_font(get_font_size(max_charactors))
     draw_text_on_image(out, parsed_text, font, color)
     out.save(pwd / output_file_name)
     echo(pwd / output_file_name)
