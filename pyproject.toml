@@ -1,0 +1,101 @@
+[project]
+name = "pystamper"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "typer>=0.15.1",
+]
+
+[dependency-groups]
+dev = [
+    "mypy>=1.14.1",
+    "pytest>=8.3.4",
+    "ruff>=0.8.6",
+]
+[tool.ruff]
+line-length = 150
+indent-width = 4
+respect-gitignore = true
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "venv",
+]
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "D",      # pydocstyle
+    "YTT",    # flake8-2020
+    "S",      # flake8-bandit
+    "BLE",    # flake8-blind-except
+    "FBT",    # flake8-boolean-trap
+    "B",      # flake8-bugbear
+    "COM",    # flake8-commas
+    "CPY",    # flake8-copyright
+    "C4",     # flake8-comprehensions
+    "DTZ",    # flake8-datetimez
+    "T10",    # flake8-debugger
+    "DJ",     # flake8-django
+    "EM",     # flake8-errmsg
+    "EXE",    # flake8-executable
+    "FA",     # flake8-future-annotation
+    "ISC",    # flake8-implicit-str-concat
+    "G",      # flake8-logging-format
+    "T20",    # flake8-print
+    "TID",    # flake8-tidy-imports
+    "ARG",    # flake8-unused-arguments
+    "PTH",    # flake8-use-pathlib
+    "TD",     # flake8-todo
+    "FIX",    # flake8-fixme
+    "ERA",    # eradicate
+    "TRY",    # tryceratops
+    "FLY",    # flynt
+    "ANN101", # flake8-annotations (missing-type-function-argument)
+    "S101",   # flake8-bandit
+    "A003",   # flake8-builtins (builtin-attribute-shadowing)
+    "B008",   # flake8-bugbear (function-call-in-default-argument)
+    "COM812", # flake8-commas (missing-trailing-comma)
+    "RET504", # flake8-return (Unnecessary assignment to `response` before `return` statement)
+    "ERA001", # eradicate (Found commented-out code)
+    "I001",   # isort (Import block is un-sorted or un-formatted)
+    "N815",   # pep8-naming (mixed-case-variable-in-class-scope)
+    "E501",   # pycodestyle (line-too-long)
+    "RUF001",  # Ruff-specific rules (ambigous-unicode-character-string)
+]
+
+[tool.ruff.format]
+# docstring内のコードスニペットもフォーマットする
+docstring-code-format = true
+# docstring内のコードスニペットの行長
+docstring-code-line-length = 150
+# インデントにはスペースを使う
+indent-style = "space"
+# 改行文字はLFに統一する
+line-ending = "lf"
+# 安定していないスタイルの設定は無効化する
+preview = false
+# ダブルクォートで統一する
+quote-style = "double"
+# 末尾のカンマは無視しない(blackとの整合性)
+skip-magic-trailing-comma = false
