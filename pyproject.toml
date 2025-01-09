@@ -15,75 +15,119 @@ dev = [
     "pytest>=8.3.4",
     "ruff>=0.8.6",
 ]
+
 [tool.ruff]
+# 安定していないルールを適用しない
+preview = false
+# 実行時にに自動で修正する
+fix = true
+# 1行の最大文字数
 line-length = 150
+# インデント幅
 indent-width = 4
+# gitignoreを継承して対象外ファイルを設定する
 respect-gitignore = true
+# フォーマッター/リンターで対象外とするファイル名パターン
 exclude = [
-    ".bzr",
-    ".direnv",
-    ".eggs",
-    ".git",
-    ".git-rewrite",
-    ".hg",
-    ".mypy_cache",
-    ".nox",
-    ".pants.d",
-    ".pytype",
-    ".ruff_cache",
-    ".svn",
-    ".tox",
-    ".venv",
-    "__pypackages__",
-    "_build",
-    "buck-out",
-    "build",
-    "dist",
-    "node_modules",
-    "venv",
+  ".bzr",
+  ".direnv",
+  ".eggs",
+  ".git",
+  ".mypy_cache",
+  ".nox",
+  ".ruff_cache",
+  ".tox",
+  ".venv",
+  "__pypackages__",
+  "_build",
+  "buck-out",
+  "build",
+  "dist",
+  "tests/**",
 ]
 
+
 [tool.ruff.lint]
+# リンティング時はすべてのルールを有効にする(500個以上のルール)
 select = ["ALL"]
+# import の sort も行う
+extend-select = ["I"]
+# ALLだと内容重複や厳格すぎるので、リンティング時に無視するルールを指定
 ignore = [
-    "D",      # pydocstyle
-    "YTT",    # flake8-2020
-    "S",      # flake8-bandit
-    "BLE",    # flake8-blind-except
-    "FBT",    # flake8-boolean-trap
-    "B",      # flake8-bugbear
-    "COM",    # flake8-commas
-    "CPY",    # flake8-copyright
-    "C4",     # flake8-comprehensions
-    "DTZ",    # flake8-datetimez
-    "T10",    # flake8-debugger
-    "DJ",     # flake8-django
-    "EM",     # flake8-errmsg
-    "EXE",    # flake8-executable
-    "FA",     # flake8-future-annotation
-    "ISC",    # flake8-implicit-str-concat
-    "G",      # flake8-logging-format
-    "T20",    # flake8-print
-    "TID",    # flake8-tidy-imports
-    "ARG",    # flake8-unused-arguments
-    "PTH",    # flake8-use-pathlib
-    "TD",     # flake8-todo
-    "FIX",    # flake8-fixme
-    "ERA",    # eradicate
-    "TRY",    # tryceratops
-    "FLY",    # flynt
-    "ANN101", # flake8-annotations (missing-type-function-argument)
-    "S101",   # flake8-bandit
-    "A003",   # flake8-builtins (builtin-attribute-shadowing)
-    "B008",   # flake8-bugbear (function-call-in-default-argument)
-    "COM812", # flake8-commas (missing-trailing-comma)
-    "RET504", # flake8-return (Unnecessary assignment to `response` before `return` statement)
-    "ERA001", # eradicate (Found commented-out code)
-    "I001",   # isort (Import block is un-sorted or un-formatted)
-    "N815",   # pep8-naming (mixed-case-variable-in-class-scope)
-    "E501",   # pycodestyle (line-too-long)
-    "RUF001",  # Ruff-specific rules (ambigous-unicode-character-string)
+  "ARG",     # flake8-unused-arguments (未使用な可変長引数の使用)
+  "A003",    # flake8-builtins (組込み関数と同名の使用させない)
+  "ANN002",  # flake8-annotations (*args引数の型ヒント必須)
+  "ANN003",  # flake8-annotations (**kwargs引数の型ヒント必須)
+  "ANN101",  # flake8-annotations (インスタンスメソッドのself引数の型ヒントを強制)
+  "ANN102",  # fkake8-annotations (クラスメソッドのcls引数の型ヒントを強制)
+  "B",       # flake8-bugbear
+  "BLE",     # flake8-blind-except (例外ハンドリングが広すぎる)
+  "COM",     # flake8-commas (タプル周りのカンマ関連のルール)
+  "CPY",     # flake8-copyright (著作権表示がない)
+  "C4",      # flake8-comprehensions
+  "C90",     # mccabe (複雑すぎるコード)
+  "D",       # pydocstyle
+  "DJ",      # flake8-django (Django関連のルール)
+  "DTZ",     # flake8-datetimez (datetime関連のルール)
+  "EM",      # flake8-errmsg (エラーメッセージの書式関連のルール)
+  "ERA",     # eradicate (コメントアウトされたままのコードの存在)
+  "EXE",     # flake8-executable (シェバン関連のルール)
+  "E402",    # pycodestyle (モジュールのインポートがファイルの先頭にない)
+  "E501",    # pycodestyle (1行が{line-lenght}より長い)
+  "FA",      # flake8-future-annotation (__future__ モジュール関連のルール)
+  "FBT",     # flake8-boolean-trap (bool型引数関連のルール)
+  "FIX",     # flake8-fixme (FIXME/TODO コメントの存在を許さない)
+  "FLY",     # flynt (f-stringの使用を強制)
+  "G",       # flake8-logging-format (ログフォーマット関連のルール)
+  "ISC",     # flake8-implicit-str-concat (暗黙的な文字列連結のルール)
+  "N815",    # pep8-naming (クラス内でスネークケース以外の使用は許さない)
+  "PD901",   # pandas-vet (pandas.DataFrameを代入する変数名に一般的な名称の使用を許さない)
+  "PLR0911", # pylint (return文が多すぎる)
+  "PLR0912", # pylint (分岐は12以内まで)
+  "PLR0913", # pylint (引数が多すぎる)
+  "PLR0915", # pylint (メソッドの行数は50行以内まで)
+  "PT",      # flake8-pytest-style (pytest関連のルール)
+  "PTH",     # flake8-use-pathlib (os.pathモジュール関連のルール)
+  "RET504",  # flake8-return (不必要なreturn文の存在をゆるさない)
+  "RUF001",  # Ruff-specific rules (文字列内にUnicode文字の使用を許さない)
+  "S",       # flake8-bandit
+  "SIM108",  # flake8-simplify (三項演算子の使用を強制)
+  "SIM112",  # flake8-simplify (大文字でない環境変数への参照)
+  "TD",      # flake8-todo (TODOコメント関連のルール)
+  "TID",     # flake8-tidy-imports (インポート関連のルール)
+  "TRY",     # tryceratops
+  "T10",     # flake8-debugger (pdb 関連の実装が存在することを許さない)
+  "T20",     # flake8-print (print 関数の使用を許さない)
+  "YTT",     # flake8-2020
+# 以下は非推奨(将来に削除予定) のルール
+  "S401",    # flake8-bandit (telnetlibモジュールの使用を許さない)
 ]
+
+
+[tool.ruff.lint.isort]
+# 大文字と小文字の区別を考慮してインポートをソートする
+case-sensitive = true
+# インポート後の空行数
+lines-after-imports = 2
+# 同じ行にインポートを結合していく
+combine-as-imports = true
+# エイリアスを使用する場合に強制的に改行する
+force-wrap-aliases = true
+# ローカルフォルダとして考慮するモジュールのリスト(相対インポート用)
+known-local-folder = ["api", "forms", "tests"]
+# 複数インポートの末尾にカンマを付けてれば1行に整形しない
+split-on-trailing-comma = true
+# from importを1行にしない
+force-single-line = false
+# ソートするインポートの順序
+section-order = [
+  "future",
+  "standard-library",
+  "third-party",
+  "first-party",
+  "local-folder",
+]
+
 
 [tool.ruff.format]
 # docstring内のコードスニペットもフォーマットする
@@ -96,7 +140,10 @@ indent-style = "space"
 line-ending = "lf"
 # 安定していないスタイルの設定は無効化する
 preview = false
-# ダブルクォートで統一する
+# ダブルクォートで統一する()
 quote-style = "double"
 # 末尾のカンマは無視しない(blackとの整合性)
 skip-magic-trailing-comma = false
+# フォーマット時のみ対象外とするファイル名パターン
+exclude = []
+
