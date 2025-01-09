@@ -147,3 +147,26 @@ skip-magic-trailing-comma = false
 # フォーマット時のみ対象外とするファイル名パターン
 exclude = []
 
+# Test: pytestの設定
+[tool.pytest.ini_options]
+pythonpath = ["./src"]
+# テストコードを探索するパス
+testpaths = ["tests"]
+# pytestに渡すオプション
+addopts = [
+    # 未登録のマーカーが存在する場合にエラーを発生させる
+    "--strict-markers",
+    # 設定ファイルにミスがある場合エラーを発生させる
+    "--strict-config",
+    # テスト実行後にサマリーを表示する
+    "-ra"
+]
+# テスト実行時に使用するユーザ定義マーカーのリスト
+markers = [
+    "slow: mark test as slow to run",
+]
+# 非同期テストを含む場合 (要pytest-asyncio)
+#asyncio_mode = "auto"
+# 非表示にする警告のリスト
+filterwarnings = []
+
